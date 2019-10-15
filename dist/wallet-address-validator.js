@@ -3474,12 +3474,9 @@ function isValidP2PKHandP2SHAddress (address, currency, networkType) {
   var addressType = getAddressType(address, currency)
 
   if (addressType) {
-    if (networkType === 'prod' || networkType === 'testnet') {
+    if (networkType === 'prod') {
       correctAddressTypes = currency.addressTypes[networkType]
-    } else {
-      correctAddressTypes = currency.addressTypes.prod.concat(currency.addressTypes.testnet)
     }
-
     return correctAddressTypes.indexOf(addressType) >= 0
   }
 
@@ -4971,21 +4968,21 @@ const ADAValidator = require('./cardano_validator')
 const EOSValidator = require('./eos_validator')
 const XLMValidator = require('./lumen_validator')
 
-// defines P2PKH and P2SH address types for standard (prod) and testnet networks
+// defines P2PKH and P2SH address types for standard networks
 const CURRENCIES = [{
   name: 'Bitcoin',
   symbol: 'btc',
-  addressTypes: { prod: ['00', '05'], testnet: ['6f', 'c4'] },
+  addressTypes: { prod: ['00', '05'] },
   validator: BTCValidator
 }, {
   name: 'BitcoinCash',
   symbol: 'bch',
-  addressTypes: { prod: ['00', '05'], testnet: ['6f', 'c4'] },
+  addressTypes: { prod: ['00', '05'] },
   validator: BTCValidator
 }, {
   name: 'LiteCoin',
   symbol: 'ltc',
-  addressTypes: { prod: ['30', '05', '32'], testnet: ['6f', 'c4', '3a'] },
+  addressTypes: { prod: ['30', '05', '32'] },
   validator: BTCValidator
 }, {
   name: 'Tron',
@@ -4995,12 +4992,12 @@ const CURRENCIES = [{
 }, {
   name: 'DogeCoin',
   symbol: 'doge',
-  addressTypes: { prod: ['1e', '16'], testnet: ['71', 'c4'] },
+  addressTypes: { prod: ['1e', '16'] },
   validator: BTCValidator
 }, {
   name: 'Tether',
   symbol: 'usdt',
-  addressTypes: { prod: ['00', '05'], testnet: ['6f', 'c4'] },
+  addressTypes: { prod: ['00', '05'] },
   validator: BTCValidator
   //validator: ETHValidator
 }, {
@@ -5010,7 +5007,7 @@ const CURRENCIES = [{
 }, {
   name: 'Neo',
   symbol: 'neo',
-  addressTypes: { prod: ['17'], testnet: [] },
+  addressTypes: { prod: ['17'] },
   validator: BTCValidator
 }, {
   name: 'Ethereum',
@@ -5050,6 +5047,14 @@ const CURRENCIES = [{
   symbol: 'rvn',
   validator: BTCValidator,
   addressTypes: { prod: ['3c'] }
+}, {
+  name: 'Waves',
+  symbol: 'waves',
+  addressTypes: { prod: ['0157'] },
+  expectedLength: 26,
+  hashFunction: 'blake256keccak256',
+  regex: /^[a-zA-Z0-9]{35}$/,
+  validator: BTCValidator
 }]
 
 module.exports = {
@@ -5207,11 +5212,11 @@ var currencies = require('./currencies')
 var DEFAULT_CURRENCY_NAME = 'bitcoin'
 
 module.exports = {
-  validate: function (address, currencyNameOrSymbol, networkType) {
+  validate: function (address, currencyNameOrSymbol) {
     var currency = currencies.getByNameOrSymbol(currencyNameOrSymbol || DEFAULT_CURRENCY_NAME)
 
     if (currency && currency.validator) {
-      return currency.validator.isValidAddress(address, currency, networkType)
+      return currency.validator.isValidAddress(address, currency, 'prod')
     }
 
     throw new Error('Missing validator for currency: ' + currencyNameOrSymbol)

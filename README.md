@@ -1,11 +1,10 @@
 ### API
 
-##### validate (address ,[ currency = 'bitcoin', [networkType = 'prod']])
+##### validate (address , 'currency' )
 
 ###### Parameters
 * address - Wallet address to validate.
 * currency - Optional. Currency name or symbol.
-* networkType - Optional. Use `'prod'` (default) to enforce standard address, `'testnet'` to enforce testnet address and `'both'` to enforce nothing.
 
 > Returns true if the address (string) is a valid wallet address for the crypto currency specified.
 
@@ -27,6 +26,7 @@
 * Neo/neo `'Neo'` or `'neo'`
 * Tether/usdt `'Tether'` or `'usdt'`
 * EOS/eos `'EOS'` or `'eos'`
+* Waves/waves `'Waves'` or `'waves'`
 
 ***
 

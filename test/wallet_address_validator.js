@@ -26,16 +26,12 @@ describe('WAValidator.validate()', function () {
       valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'Bitcoin')
       valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'btc')
       valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'btc', 'prod')
-      valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'btc', 'both')
       valid('1oNLrsHnBcR6dpaBpwz3LSwutbUNkNSjs', 'bitcoin')
-      valid('mzBc4XEFSdzCDcTxAgf6EZXgsZWpztRhef', 'bitcoin', 'testnet')
-      valid('mzBc4XEFSdzCDcTxAgf6EZXgsZWpztRhef', 'bitcoin', 'both')
       valid('1SQHtwR5oJRKLfiWQ2APsAd9miUc4k2ez')
       valid('116CGDLddrZhMrTwhCVJXtXQpxygTT1kHd')
       // p2sh addresses
       valid('3NJZLcZEEYBpxYEUGewU4knsQRn1WM5Fkt')
       valid('3NJZLcZEEYBpxYEUGewU4knsQRn1WM5Fkt', 'bitcoin')
-      valid('2MxKEf2su6FGAUfCEAHreGFQvEYrfYNHvL7', 'bitcoin', 'testnet')
       // segwit addresses
       valid('BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4', 'bitcoin')
       valid('tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sl5k7', 'bitcoin')
@@ -62,14 +58,10 @@ describe('WAValidator.validate()', function () {
       valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'Bitcoin')
       valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'bch')
       valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'bch', 'prod')
-      valid('12QeMLzSrB8XH8FvEzPMVoRxVAzTr5XM2y', 'bch', 'both')
       valid('1oNLrsHnBcR6dpaBpwz3LSwutbUNkNSjs', 'bitcoincash')
-      valid('mzBc4XEFSdzCDcTxAgf6EZXgsZWpztRhef', 'bitcoincash', 'testnet')
-      valid('mzBc4XEFSdzCDcTxAgf6EZXgsZWpztRhef', 'bitcoincash', 'both')
 
       // p2sh addresses
       valid('3NJZLcZEEYBpxYEUGewU4knsQRn1WM5Fkt', 'bitcoincash')
-      valid('2MxKEf2su6FGAUfCEAHreGFQvEYrfYNHvL7', 'bitcoincash', 'testnet')
     })
 
     it('should return true for correct litecoin addresses', function () {
@@ -77,12 +69,8 @@ describe('WAValidator.validate()', function () {
       valid('LVg2kJoFNg45Nbpy53h7Fe1wKyeXVRhMH9', 'LTC')
       valid('LTpYZG19YmfvY2bBDYtCKpunVRw7nVgRHW', 'litecoin')
       valid('Lb6wDP2kHGyWC7vrZuZAgV7V4ECyDdH7a6', 'litecoin')
-      valid('mzBc4XEFSdzCDcTxAgf6EZXgsZWpztRhef', 'litecoin', 'testnet')
       // p2sh addresses
       valid('3NJZLcZEEYBpxYEUGewU4knsQRn1WM5Fkt', 'litecoin')
-      valid('2MxKEf2su6FGAUfCEAHreGFQvEYrfYNHvL7', 'litecoin', 'testnet')
-      valid('QW2SvwjaJU8LD6GSmtm1PHnBG2xPuxwZFy', 'litecoin', 'testnet')
-      valid('QjpzxpbLp5pCGsCczMbfh1uhC3P89QZavY', 'litecoin', 'testnet')
     })
 
     it('should return true for correct Tron addresses', function(){
@@ -101,7 +89,6 @@ describe('WAValidator.validate()', function () {
       valid('DFs6qrdCp4K4evv6jU5R3y2WjaWQbXzGsX', 'DOGE')
       // p2sh addresses
       valid('A7JjzK9k9x5b2MkkQzqt91WZsuu7wTu6iS', 'dogecoin')
-      valid('2MxKEf2su6FGAUfCEAHreGFQvEYrfYNHvL7', 'dogecoin', 'testnet')
     })
 
     it('should return true for correct Ethereum addresses', function () {
@@ -159,6 +146,9 @@ describe('WAValidator.validate()', function () {
       valid('keyhanwallet', 'eos')
       valid('keypar12345b', 'eos')
     })
+    it('should return true for correct Waves addresses', () => {
+      valid('3PN5u5AAP4UnCapLsGXone7t3E9B4TGs2QW', 'waves')
+    })
   })
 
   describe('invalid results', function () {
@@ -168,10 +158,6 @@ describe('WAValidator.validate()', function () {
       invalid('1A1zP1ePQGefi2DMPTifTL5SLmv7DivfNa', currency) // reject invalid address
       invalid('bd839e4f6fadb293ba580df5dea7814399989983', currency) // reject transaction id's
       // testnet
-      invalid('', currency, 'testnet') // reject blank
-      invalid('%%@', currency, 'testnet') // reject invalid base58 string
-      invalid('1A1zP1ePQGefi2DMPTifTL5SLmv7DivfNa', currency, 'testnet') // reject invalid address
-      invalid('bd839e4f6fadb293ba580df5dea7814399989983', currency, 'testnet') // reject transaction id's
     }
 
     it('should return false for incorrect bitcoin addresses', function () {
@@ -248,6 +234,9 @@ describe('WAValidator.validate()', function () {
       invalid('keyhan678912', 'eos')
       invalid('keyhanwallet12345', 'eos')
       invalid('keyhanwalle.', 'eos')
+    })
+    it('should return false for incorrect Waves addresses', () => {
+      invalid('3PN5u5AAP4UnCapLsGXone7t3e9B4TGs2QW', 'waves')
     })
   })
 })
